@@ -1,0 +1,34 @@
+pipeline{
+    agent any
+    tools {
+        maven "maven 3.8.6"
+    }
+    stages {
+        stage('Get code') {
+            steps {
+                sh echo 'cloning code'
+                git credentialsgit credentialsId: 'ec8a685b-92e7-4b75-a4d0-39be32a02529', url: 'https://github.com/dolapse/maven-web-application'
+            }
+        }
+     stages('2 test and build') {
+       steps {
+           sh "echo 'running junit test cases'"
+           sh "mvn clean package"
+        }   
+       } 
+    stage('3 code quality') {
+       steps {
+           sh "mvn sonar:sonar"
+       }    
+        }
+     stage('4 uploadNexus') {
+         sh "mvn deploy"
+      }    
+    }
+    stage('5 deploy to prod') {
+        deploy adapters: [tomcat9(credentialsId: 'dbb6dca3-852f-426d-9404-e95baa909b0c', path: '', url: 'http://52.53.203.29:8080/manager/html')], contextPath: null, war: 'target/*war'
+       }   
+       } 
+     }   
+ } 
+       
