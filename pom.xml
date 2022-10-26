@@ -95,7 +95,7 @@
 	<distributionManagement>
 	    <repository>
 	      <id>nexus</id>
-	      <name>Landmark Technologies Releases Nexus Repository</name>
+	      <name>Landmark Technologies Releases Nexus Repository </name>
 	      <url>http://18.144.176.47:8081/repository/mtn-webapp-releases/</url>
 	    </repository>
 	    
